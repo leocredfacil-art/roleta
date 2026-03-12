@@ -1,108 +1,60 @@
 "use client"
+
 import { useState } from "react"
 
-const premios = [
-  "5% desconto",
-  "10% desconto",
-  "Refrigerante grátis",
-  "Borda cheddar",
-  "Pizza broto doce",
-  "Frete grátis",
-  "Tente novamente"
-]
+export default function Home() {
 
-export default function Page(){
+  const premios = [
+    "Refrigerante grátis",
+    "5% desconto",
+    "10% desconto",
+    "Borda cheddar",
+    "Pizza broto doce",
+    "Tente novamente"
+  ]
 
-  const [angulo,setAngulo] = useState(0)
-  const [premio,setPremio] = useState("")
-  const [girando,setGirando] = useState(false)
+  const [resultado, setResultado] = useState("")
 
-  function girar(){
-
-    if(girando) return
-
-    setGirando(true)
-
-    const index = Math.floor(Math.random()*premios.length)
-
-    const grausPorPremio = 360/premios.length
-
-    const rotacao = 360*6 + (360 - index*grausPorPremio)
-
-    setAngulo(rotacao)
-
-    setTimeout(()=>{
-      setPremio(premios[index])
-      setGirando(false)
-    },4000)
-
+  function girar() {
+    const premio = premios[Math.floor(Math.random() * premios.length)]
+    setResultado(premio)
   }
 
-  return(
+  return (
+    <div style={{
+      background:"#000",
+      height:"100vh",
+      display:"flex",
+      flexDirection:"column",
+      alignItems:"center",
+      justifyContent:"center",
+      color:"#fff",
+      fontFamily:"Arial"
+    }}>
 
-  <div style={{
-  height:"100vh",
-  display:"flex",
-  flexDirection:"column",
-  alignItems:"center",
-  justifyContent:"center",
-  fontFamily:"Arial",
-  background:"#111",
-  color:"white"
-  }}>
+      <h1>🎡 Roleta Premiada</h1>
 
-  <h1>🎡 Roleta Premiada</h1>
+      <button
+        onClick={girar}
+        style={{
+          padding:"20px 40px",
+          fontSize:"20px",
+          marginTop:"30px",
+          cursor:"pointer",
+          background:"#ff9800",
+          border:"none",
+          borderRadius:"10px"
+        }}
+      >
+        Girar Roleta
+      </button>
 
-  <div style={{position:"relative"}}>
+      {resultado && (
+        <h2 style={{marginTop:"40px"}}>
+          Você ganhou: {resultado}
+        </h2>
+      )}
 
-  <div style={{
-  position:"absolute",
-  top:"-20px",
-  left:"50%",
-  transform:"translateX(-50%)",
-  fontSize:"40px"
-  }}>
-  ▼
-  </div>
-
-  <div style={{
-  width:"350px",
-  height:"350px",
-  borderRadius:"50%",
-  border:"8px solid orange",
-  transform:`rotate(${angulo}deg)`,
-  transition:"transform 4s ease-out",
-  background:
-  "conic-gradient(red,orange,yellow,green,blue,purple,pink)"
-  }}>
-
-  </div>
-
-  </div>
-
-  <button
-  onClick={girar}
-  style={{
-  padding:"15px 40px",
-  fontSize:"20px",
-  marginTop:"40px",
-  cursor:"pointer",
-  borderRadius:"10px"
-  }}
-  >
-  Girar Roleta
-  </button>
-
-  {premio && (
-
-  <h2 style={{marginTop:"30px"}}>
-  🎁 Você ganhou: {premio}
-  </h2>
-
-  )}
-
-  </div>
-
+    </div>
   )
-
 }
